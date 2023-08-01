@@ -18,27 +18,30 @@ void Board::update(char key)
 	{
 	case 'w':
 		//go top
-		for (int i = 1; i < 4; ++i)
+		for (int k = 0; k < 4; ++k)
 		{
-			for (int j = 0; j < 4; ++j)
+			for (int i = 3; i > 0; --i)
 			{
-				if (m_values[i][j] == 0)
+				for (int j = 0; j < 4; ++j)
 				{
-					continue;
+					if (m_values[i][j] == 0)
+					{
+						continue;
+					}
+					if (m_values[i - 1][j] == m_values[i][j])
+					{
+						m_values[i - 1][j] *= 2;
+						m_values[i][j] = 0;
+					}
+					if (m_values[i - 1][j] == 0 && m_values[i][j] != 0)
+					{
+						m_values[i - 1][j] = m_values[i][j];
+						m_values[i][j] = 0;
+					}
+
+
+
 				}
-				if (m_values[i - 1][j] == m_values[i][j])
-				{
-					m_values[i - 1][j] *= m_values[i][j];
-					m_values[i][j] = 0;
-				}
-				if (m_values[i - 1][j] == 0 && m_values[i][j] != 0)
-				{
-					m_values[i - 1][j] = m_values[i][j];
-					m_values[i][j] = 0;
-				}
-				
-					
-				
 			}
 		}
 		break;
@@ -46,22 +49,55 @@ void Board::update(char key)
 		//go left
 		for (int i = 0; i < 4; ++i)
 		{
-			for (int j = 1; j < 4; ++j)
+			for (int k = 0; k < 4; ++k)
 			{
-				m_values[i][j - 1] *= m_values[i][j];
-				m_values[i][j] = 0;
+				for (int j = 3; j > 0; --j)
+				{
+					if (m_values[i][j] == 0)
+					{
+						continue;
+					}
+					if (m_values[i][j - 1] == m_values[i][j])
+					{
+						m_values[i][j - 1] *= 2;
+						m_values[i][j] = 0;
+					}
+					if (m_values[i][j - 1] == 0 && m_values[i][j] != 0)
+					{
+						m_values[i][j - 1] = m_values[i][j];
+						m_values[i][j] = 0;
+					}
+
+
+
+				}
 			}
 		}
 		break;
 	case 's':
 		//go bottom
-		for (int i = 0; i < 3; ++i)
+		for (int k = 0; k < 4; ++k)
 		{
-			for (int j = 0; j < 4; ++j)
+			for (int i = 0; i < 3; ++i)
 			{
-				m_values[i + 1][j] != 0 ?
-					m_values[i + 1][j] *= m_values[i][j] :
-					m_values[i + 1][j] += m_values[i][j];
+
+				for (int j = 0; j < 4; ++j)
+				{
+					if (m_values[i][j] == 0)
+					{
+						continue;
+					}
+					if (m_values[i + 1][j] == m_values[i][j])
+					{
+						m_values[i + 1][j] *= 2;
+						m_values[i][j] = 0;
+					}
+					if (m_values[i + 1][j] == 0 && m_values[i][j] != 0)
+					{
+						m_values[i + 1][j] = m_values[i][j];
+						m_values[i][j] = 0;
+					}
+				}
 			}
 		}
 		break;
@@ -69,10 +105,26 @@ void Board::update(char key)
 		//go right
 		for (int i = 0; i < 4; ++i)
 		{
-			for (int j = 0; j < 3; ++j)
+			for (int k = 0; k < 4; ++k)
 			{
-				m_values[i][j + 1] *= m_values[i][j];
-				m_values[i][j] = 0;
+
+				for (int j = 0; j < 3; ++j)
+				{
+					if (m_values[i][j] == 0)
+					{
+						continue;
+					}
+					if (m_values[i][j + 1] == m_values[i][j])
+					{
+						m_values[i][j + 1] *= 2;
+						m_values[i][j] = 0;
+					}
+					if (m_values[i][j + 1] == 0 && m_values[i][j] != 0)
+					{
+						m_values[i][j + 1] = m_values[i][j];
+						m_values[i][j] = 0;
+					}
+				}
 			}
 		}
 		break;
@@ -144,8 +196,16 @@ void Board::drawPrimitiveWithNumber(std::string p1, std::string p2, int* value)
 {
 	for (int i = 0; i < 4; ++i)
 	{
-		std::cout << p1 ;
-		std::cout << std::setfill(p2[0]) << std::setw(5) << value[i];
+		if (value[i] != 0)
+		{
+			std::cout << p1;
+			std::cout << std::setfill(p2[0]) << std::setw(5) << value[i];
+		}
+		else
+		{
+			std::cout << p1 << std::setfill(p2[0]) << std::setw(5) << p2;
+		}
+		
 	}
 	std::cout << p1;
 	std::cout << "\n";
