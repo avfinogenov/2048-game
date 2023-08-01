@@ -1,5 +1,6 @@
 ﻿#include <iostream>
-
+#include <stdio.h>
+#include <conio.h>
 #include "Board.h"
 
 //todo
@@ -19,8 +20,8 @@ int main()
     {
         system("cls");
         b.drawFrame();
-        std::cin >> key;
-        
+        key = _getch();
+
         b.update(key);
         
     }
